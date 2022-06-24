@@ -7,7 +7,6 @@ from TTTClass import TTTClass
 class TTTIntroClass(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('Tik Tac Toe')
         self.iconbitmap(r'C:\Program Files\Icon.ico')
         self.geometry('300x250')
         self.play_again=False
@@ -20,7 +19,7 @@ class TTTIntroClass(tk.Tk):
         self.selected_mode.trace("w", self.menu_item_selected)
         self.AImessage=''
         self.msg_b=''
-
+        self.overrideredirect(1)
 
     def choose_symobl_x(self):
         self.current_player_idx = 0
@@ -74,9 +73,14 @@ class TTTIntroClass(tk.Tk):
         self.mainloop()
 
     def playGame(self):
+        """
+        this is the main function that runs the game and is only interupted when the quit button is pressed
+        """
         self.make_intro_window()
         while self.play_again == True :
             ticGUI = TTTClass()
+            ticGUI.clickedX = self.clickedX
+            ticGUI.current_player_idx = self.current_player_idx
             if (self.selected_mode.get() == 'manual'):
                 print("playing in manual mode")
                 ticGUI.make_buttons()
@@ -89,7 +93,8 @@ class TTTIntroClass(tk.Tk):
                 self.play_again = False
                 self.quit()
                 messagebox.showinfo('tic tac toe ERROR! ', ' ERROR!! MODE of PLAY was not SELECTED')
-        print("keep playing is FALSE")
+
+
 if __name__ == "__main__":
     playfullTTT = TTTIntroClass()
     playfullTTT.playGame()

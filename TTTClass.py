@@ -32,6 +32,11 @@ class TTTClass(tk.Tk):
 
 
     def b_click(self,b):
+        """
+        takes the state of each button and clickedX variable
+        returns an X on the board if clickedX is True and the button has not been clicked
+        returns an O on the board if clickedX is False and the button has not been clicked
+        """
         if b['state'] == tk.NORMAL and self.clickedX == True:
             b['state'] = tk.DISABLED
             b['text'] = 'X'
@@ -46,6 +51,12 @@ class TTTClass(tk.Tk):
             self.findSmartwon()
 
     def b_clickAI(self,b):
+        """
+        this function executes in AI mode when any button in the game is clicked
+        takes the state of each button and current_player_idx variable
+        it alternates player index after each click
+        executes the after function to interrupt Tkinter mainloop and let the computer make a move
+        """
         if b['state'] == tk.NORMAL and self.current_player_idx == 0:
             b['state'] = tk.DISABLED
             b['text'] = 'X'
@@ -64,6 +75,9 @@ class TTTClass(tk.Tk):
             self.after(500, lambda: self.play_Computer_move_X())
 
     def make_buttons(self):
+        """
+        this function creates nine buttons and appends them to a list for the manual mode
+        """
         for i in range(1, 10):
             self.vDict1[str(i)] = "b"+str(i)+" = tk.Button(self, text='b"+str(i)+" ', " \
                                   "font=('Helvetica', 20), height=3, width=6, bd=4, " \
@@ -101,6 +115,9 @@ class TTTClass(tk.Tk):
         self.button_lst.append(b9)
 
     def make_buttonsAgainst(self):
+        """
+        this function creates a list of buttons for the AI mode
+        """
         b1 = tk.Button(self, text='b1 ', font=('Helvetica', 20), height=3, width=6, bd=4, bg='SystemButtonFace',
                        command=lambda: self.b_clickAI(b1))
         self.button_lst.append(b1)
@@ -130,6 +147,9 @@ class TTTClass(tk.Tk):
         self.button_lst.append(b9)
 
     def makePlayGrid(self):
+        """
+        this function arranges every button in button_lst into an array of 3 x n for manual mode
+        """
         row = 0
         column = 0
         indx = 0
@@ -143,8 +163,33 @@ class TTTClass(tk.Tk):
                 row += 1
         self.mainloop()
 
-    # check to see if someone won can be refined
+    def makePlayGridAgainstComputer(self):
+        """
+        this function arranges every button in button_lst into an array of 3 x n for AI mode
+        """
+        row = 0
+        column = 0
+        indx = 0
+        for button in self.button_lst:
+            print("index=", indx, ", row= ", row, ",  column= ", column)
+            button.grid(row=row, column=column)
+            indx += 1
+            column = indx % 3
+            # update row only when index is ==3
+            if indx % 3 == 0:
+                row += 1
+        self.AImessage = "You are playing against AI:"
+        self.msg_b = tk.Button(self, relief=tk.GROOVE, text=self.AImessage, font=('Helvetica', 19), height=3, width=0,
+                               bd=10, bg='white')
+        # msg_b.grid(row = 3,column =0)
+        self.msg_b.grid(row=3, column=0, sticky=tk.W, columnspan=3)
+        self.after(1000, lambda: self.playComputer())
+        self.mainloop()
+
     def findSmartwon(self):
+        """
+        this function is called after every change in game state to see if a win condition has been met
+        """
         winning_comb = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [3, 4, 6], [0, 4, 8]]
         #check for x
         for i in range(len(winning_comb)):
@@ -174,7 +219,9 @@ class TTTClass(tk.Tk):
                         return
 
     def check_current_state(self,game_state):
-        # Check if draw
+        """
+        used as a base condition for recursive
+        """
         draw_flag = 0
         for i in range(3):
             for j in range(3):
@@ -209,7 +256,10 @@ class TTTClass(tk.Tk):
     
     
     def getBestMove(self,state, player):
-       #min max algorithm code
+        """
+        recursive function that gets the current state of the game
+        returns the best possible move by searching through every possible outcome
+        """
         if (player == 'X'):
             AIis0 = True
         else:
@@ -295,6 +345,9 @@ class TTTClass(tk.Tk):
     
     
     def play_move(self,state, player, block_num):
+        """
+        this function checks to see if a position is empty and puts either X or O depending on the player
+        """
         if state[int((block_num - 1) / 3)][(block_num - 1) % 3] == ' ':
             state[int((block_num - 1) / 3)][(block_num - 1) % 3] = player
         else:
@@ -302,6 +355,9 @@ class TTTClass(tk.Tk):
             self.play_move(state, player, block_num)
     
     def copy_game_state(self,state):
+        """
+        utility copy function for list of list that represents the board game status
+        """
         new_state = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
         for i in range(3):
             for j in range(3):
@@ -309,6 +365,9 @@ class TTTClass(tk.Tk):
         return new_state
     
     def copy_game_stateGUI(self,game_state):
+        """
+        this function is used to keep the tic tac toe GUI and board state used by the recursive function in sync
+        """
         i=0
         j=0
         for button in self.button_lst:
@@ -323,7 +382,9 @@ class TTTClass(tk.Tk):
                 j+=1
     
     def print_board(self,game_state):
-        #for debug only
+        """
+        prints the game board, for debugging purposes
+        """
         print('----------------')
         print('| ' + str(game_state[0][0]) + ' | ' + str(game_state[0][1]) + ' | ' + str(game_state[0][2]) + ' |')
         print('----------------')
@@ -332,8 +393,11 @@ class TTTClass(tk.Tk):
         print('| ' + str(game_state[2][0]) + ' | ' + str(game_state[2][1]) + ' | ' + str(game_state[2][2]) + ' |')
         print('----------------')
     
-    def play_Computer_move_X(self): #player inex = 1, AI index =0
-        #find current state of the board
+    def play_Computer_move_X(self): #player index = 1, AI index =0
+        """
+        Updates the current game status and finds the next best move for the computer and for the person
+        and checks if someone has won after the move is made
+        """
         self.copy_game_stateGUI(self.game_state)
         self.print_board(self.game_state)
         best_move = self.getBestMove(self.game_state,self.players[1])
@@ -351,6 +415,10 @@ class TTTClass(tk.Tk):
         self.msg_b['text'] = 'AI found best move for you: b' + str(best_move)
 
     def play_Computer_move_O(self):#player index 1, computer 0
+        """
+        Updates the current game status and finds the next best move for the computer and for the person
+        and checks if someone has won after the move is made
+        """
         print("AI_o self.countClick  self.winner  ", self.countClick, self.winner)
         if self.countClick == 9 and self.winner == False:
             self.msg_b['text'] = 'tic tac toe', 'IT IS A DRAW'
@@ -370,6 +438,9 @@ class TTTClass(tk.Tk):
         self.msg_b['text'] = 'AI found best move for you: b' + str(self.best_move)
 
     def playComputer(self):
+        """
+        this function starts the game in AI mode
+        """
         print('playing computer')
         if self.current_player_idx == 0:
             print("you chose :", self.players[self.current_player_idx])
@@ -377,31 +448,13 @@ class TTTClass(tk.Tk):
             self.AImessage += '\n You : X  AI : 0\n You go first'
             self.msg_b['text'] = self.AImessage
     
-        elif self.current_player_idx == 1: #
+        elif self.current_player_idx == 1:
             print("you chose :", self.players[self.current_player_idx])
             print("computer is using X and X goes first")
             self.AImessage += '\n You : O  AI : X\n AI goes first'
             self.play_Computer_move_X()
             self.msg_b['text'] = self.AImessage
     
-    def makePlayGridAgainstComputer(self):
-        row = 0
-        column = 0
-        indx = 0
-        for button in self.button_lst:
-            print("index=", indx, ", row= ", row,",  column= ", column)
-            button.grid(row=row, column=column)
-            indx += 1
-            column = indx % 3
-            #update row only when index is ==3
-            if indx % 3 == 0:
-                row += 1
-        self.AImessage = "You are playing against AI:"
-        self.msg_b = tk.Button(self, relief=tk.GROOVE, text= self.AImessage , font=('Helvetica', 19), height=3, width=0,bd=10, bg='white')
-        #msg_b.grid(row = 3,column =0)
-        self.msg_b.grid(row=3, column=0, sticky=tk.W, columnspan=3)
-        self.after(1000,lambda:self.playComputer())
-        self.mainloop()
 
 # if __name__ == "__main__":
 #     playTTT = TTTClass()
