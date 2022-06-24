@@ -41,18 +41,6 @@ def b_click_computer(b):
         #checkifwon()
         findSmartwon()
         TTTSettings.mattGame.after(500, lambda: play_Computer_move_X())
-# build the buttons
-# TTTSettings.button_lst[0] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[0]) )
-# TTTSettings.button_lst[1] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[1]) )
-# TTTSettings.button_lst[2] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[2]) )
-#
-# TTTSettings.button_lst[3] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[3]) )
-# TTTSettings.button_lst[4] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[4]) )
-# TTTSettings.button_lst[5] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[5]) )
-#
-# TTTSettings.button_lst[6] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[6]) )
-# TTTSettings.button_lst[7] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[7]) )
-# TTTSettings.button_lst[8] = Button(TTTSettings.mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(TTTSettings.button_lst[8]) )
 
 # check to see if someone won can be refined
 def findSmartwon():
@@ -84,126 +72,15 @@ def findSmartwon():
                     break
 
 
-#this is the old method no longer used substituted with findSmartwon
-def checkifwon():
-
-    if TTTSettings.button_lst[0]['text'] == 'X' and TTTSettings.button_lst[1]['text'] == 'X' and TTTSettings.button_lst[2]['text'] == 'X':
-        for b in TTTSettings.button_lst[0:2]:
-            b.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[3]['text'] == 'X' and TTTSettings.button_lst[4]['text'] == 'X' and TTTSettings.button_lst[5]['text'] == 'X':
-        for b in TTTSettings.button_lst[3:5]:
-            b.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[6]['text'] == 'X' and TTTSettings.button_lst[7]['text'] == 'X' and TTTSettings.button_lst[8]['text'] == 'X':
-        for b in TTTSettings.button_lst[6:8]:
-            b.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[0]['text'] == 'X' and TTTSettings.button_lst[3]['text'] == 'X' and TTTSettings.button_lst[6]['text'] == 'X':
-        TTTSettings.button_lst[0].config(bg='red')
-        TTTSettings.button_lst[3].config(bg='red')
-        TTTSettings.button_lst[6].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[1]['text'] == 'X' and TTTSettings.button_lst[4]['text'] == 'X' and TTTSettings.button_lst[7]['text'] == 'X':
-        TTTSettings.button_lst[1].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[7](bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[2]['text'] == 'X' and TTTSettings.button_lst[5]['text'] == 'X' and TTTSettings.button_lst[8]['text'] == 'X':
-        TTTSettings.button_lst[2].config(bg='red')
-        TTTSettings.button_lst[5].config(bg='red')
-        TTTSettings.button_lst[8].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[0]['text'] == 'X' and TTTSettings.button_lst[4]['text'] == 'X' and TTTSettings.button_lst[8]['text'] == 'X':
-        TTTSettings.button_lst[0].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[8].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[2]['text'] == 'X' and TTTSettings.button_lst[4]['text'] == 'X' and TTTSettings.button_lst[6]['text'] == 'X':
-        TTTSettings.button_lst[2].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[6].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    # check for o win
-    elif TTTSettings.button_lst[0]['text'] == 'O' and TTTSettings.button_lst[1]['text'] == 'O' and TTTSettings.button_lst[2]['text'] == 'O':
-        TTTSettings.button_lst[0].config(bg='red')
-        TTTSettings.button_lst[1].config(bg='red')
-        TTTSettings.button_lst[2].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[3]['text'] == 'O' and TTTSettings.button_lst[4]['text'] == 'O' and TTTSettings.button_lst[5]['text'] == 'O':
-        TTTSettings.button_lst[3].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[5].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[6]['text'] == 'O' and TTTSettings.button_lst[7]['text'] == 'O' and TTTSettings.button_lst[8]['text'] == 'O':
-        TTTSettings.button_lst[6].config(bg='red')
-        TTTSettings.button_lst[7].config(bg='red')
-        TTTSettings.button_lst[8].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[0]['text'] == 'O' and TTTSettings.button_lst[3]['text'] == 'O' and TTTSettings.button_lst[6]['text'] == 'O':
-        TTTSettings.button_lst[0].config(bg='red')
-        TTTSettings.button_lst[3].config(bg='red')
-        TTTSettings.button_lst[6].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[1]['text'] == 'O' and TTTSettings.button_lst[4]['text'] == 'O' and TTTSettings.button_lst[7]['text'] == 'O':
-        TTTSettings.button_lst[1].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[7].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[2]['text'] == 'O' and TTTSettings.button_lst[5]['text'] == 'O' and TTTSettings.button_lst[8]['text'] == 'O':
-        TTTSettings.button_lst[2].config(bg='red')
-        TTTSettings.button_lst[5].config(bg='red')
-        TTTSettings.button_lst[8].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[0]['text'] == 'O' and TTTSettings.button_lst[4]['text'] == 'O' and TTTSettings.button_lst[8]['text'] == 'O':
-        TTTSettings.button_lst[0].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[8].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
-    elif TTTSettings.button_lst[2]['text'] == 'O' and TTTSettings.button_lst[4]['text'] == 'O' and TTTSettings.button_lst[6]['text'] == 'O':
-        TTTSettings.button_lst[2].config(bg='red')
-        TTTSettings.button_lst[4].config(bg='red')
-        TTTSettings.button_lst[6].config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tac toe', 'we have a winner')
-
 def make_buttons():
     TTTSettings.mattGame = Tk()
     TTTSettings.button_lst = []
     vDict1 ={}
     for i in range(1, 10):
-        vDict1[str(i)] = "TTTSettings.button_lst.append(Button(TTTSettings.mattGame, relief = GROOVE, text='b"+str(i)+" ', font=('Helvetica', 20), height = 3, width = 6, bd = 4, bg = 'SystemButtonFace', " \
-                                                                                                "command =lambda:b_click(TTTSettings.button_lst["+str(i)+"-1])))"
+        # b1 = Button(mattGame,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b1) )
+        vDict1[str(i)] = "TTTSettings.button_lst.append(Button(TTTSettings.mattGame, relief = GROOVE, text='b"+str(i)\
+                         +" ', font=('Helvetica', 20), height = 3, width = 6, bd = 4, bg = 'SystemButtonFace', " \
+                          "command =lambda:b_click(TTTSettings.button_lst["+str(i)+"-1])))"
     for key, val in vDict1.items():
         print(val)
         exec(val)
@@ -213,28 +90,17 @@ def make_buttonsAgainst():
     TTTSettings.button_lst = []
     vDict1 ={}
     for i in range(1, 10):
-        vDict1[str(i)] = "TTTSettings.button_lst.append(Button(TTTSettings.mattGame, relief = GROOVE, text='b"+str(i)+" ', font=('Helvetica', 20), height = 3, width = 6, bd = 4, bg = 'SystemButtonFace', " \
-                                                                                                "command =lambda:b_click_computer(TTTSettings.button_lst["+str(i)+"-1])))"
+        vDict1[str(i)] = "TTTSettings.button_lst.append(Button(TTTSettings.mattGame, relief = GROOVE, text='b"+str(i)\
+                         +" ', font=('Helvetica', 20), height = 3, width = 6, bd = 4, bg = 'SystemButtonFace', " \
+                            "command =lambda:b_click_computer(TTTSettings.button_lst["+str(i)+"-1])))"
     for key, val in vDict1.items():
         #print(val)
         exec(val)
-# Grid our buttons to the string
-# TTTSettings.button_lst[0].grid(row=0, column=0)
-# TTTSettings.button_lst[1].grid(row=0, column=1)
-# TTTSettings.button_lst[2].grid(row=0, column=2)
-#
-# TTTSettings.button_lst[3].grid(row=1, column=0)
-# TTTSettings.button_lst[4].grid(row=1, column=1)
-# TTTSettings.button_lst[5].grid(row=1, column=2)
-#
-# TTTSettings.button_lst[6].grid(row=2, column=0)
-# TTTSettings.button_lst[7].grid(row=2, column=1)
-# TTTSettings.button_lst[8].grid(row=2, column=2)
+
 
 def makePlayGrid():
     TTTSettings.mattGame.title('Tik Tac Toe')
-    # find tic tac toe icon on the web and put it in corner of the app
-    TTTSettings.mattGame.iconbitmap(r'C:\Python\tic-tac-toe.ico')
+    TTTSettings.mattGame.iconbitmap(r'C:\Program Files\Icon.ico')
 
     row = 0
     column = 0
@@ -461,7 +327,7 @@ def playComputer():
 def makePlayGridAgainstComputer():
     TTTSettings.mattGame.title('Tik Tac Toe Against AI')
     # find tic tac toe icon on the web and put it in corner of the app
-    TTTSettings.mattGame.iconbitmap(r'C:\Python\tic-tac-toe.ico')
+    TTTSettings.mattGame.iconbitmap(r'C:\Program Files\Icon.ico')
     row = 0
     column = 0
     indx = 0
@@ -477,8 +343,5 @@ def makePlayGridAgainstComputer():
     TTTSettings.msg_b = Button(TTTSettings.mattGame, relief=GROOVE, text= TTTSettings.AImessage , font=('Helvetica', 19), height=3, width=0,bd=10, bg='white')
     #msg_b.grid(row = 3,column =0)
     TTTSettings.msg_b.grid(row=3, column=0, sticky=W, columnspan=3)
-    TTTSettings.mattGame.after(2000,lambda:playComputer())
+    TTTSettings.mattGame.after(1000,lambda:playComputer())
     TTTSettings.mattGame.mainloop()
-
-
-

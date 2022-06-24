@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
 import numpy as np
-from math import inf as infinity
 import tictacToeSequential
 import TTTSettings
 
@@ -55,7 +54,6 @@ def exit_game():
     TTTSettings.intro_frame.quit()
 
 def menu_item_selected(*args):
-    """ handle menu selected event """
     TTTSettings.selected_mode.get()
     print ("seleacted mode is ",TTTSettings.selected_mode.get())
 
@@ -75,10 +73,8 @@ def make_intro_window():
     quit_b.pack(side='right', padx=10, pady=10)
     quit_b.place(x=110, y=40)
 
-    # create the Menubutton
 
     menu_button = Menubutton(TTTSettings.intro_frame, text='Select a mode',relief=RAISED)
-    # create a new menu instance
     menu =  Menu(menu_button, tearoff=1)
     for mode in TTTSettings.play_mode:
         menu.add_radiobutton(
@@ -86,7 +82,6 @@ def make_intro_window():
             value=mode,
             variable=TTTSettings.selected_mode)
 
-    # associate menu with the Menubutton
     menu_button["menu"] = menu
     menu_button.place(x=110,y=80)
     TTTSettings.intro_frame.mainloop()
@@ -112,6 +107,5 @@ def playGame():
             TTTSettings.intro_frame.quit()
             messagebox.showinfo('tic tac toe ERROR! ', ' ERROR!! MODE of PLAY was not SELECTED')
 
-#main code entry this is where you start
+#main code
 playGame()
-
