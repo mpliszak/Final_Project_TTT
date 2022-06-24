@@ -1,191 +1,117 @@
 from tkinter import *
 from tkinter import messagebox
+import numpy as np
+from math import inf as infinity
+import tictacToeSequential
+import TTTSettings
 
-root = Tk()
-root.title('Tik Tac Toe')
-root.iconbitmap('C:\Program Files\Icon.ico')
+def fist_init():
+    TTTSettings.selected_mode = StringVar()
+    TTTSettings.selected_mode.trace("w", menu_item_selected)
+    # X starts so True
+    TTTSettings.clickedX = True
+    TTTSettings.vDict1 = {}
+    TTTSettings.countClick= 0
+    TTTSettings.winner = False
+    TTTSettings.button_lst = []
+    TTTSettings.game_state = \
+                 [[' ', ' ', ' '],
+                  [' ', ' ', ' '],
+                  [' ', ' ', ' ']]
+    TTTSettings.current_state = "Not Done"
+    TTTSettings.play_again = False
+    TTTSettings.players= ['X', 'O']
 
-# X starts so True
-clicked = True
-count = 0
+def init_TicTacToe():
+    TTTSettings.vDict1 = {}
+    TTTSettings.countClick= 0
+    TTTSettings.winner = False
+    TTTSettings.button_lst = []
+    TTTSettings.game_state = \
+                 [[' ', ' ', ' '],
+                  [' ', ' ', ' '],
+                  [' ', ' ', ' ']]
+    TTTSettings.current_state = "Not Done"
+    TTTSettings.play_again = False
 
-#disable all buttons
-def disable_buttons():
-    b1.config(state=DISABLED)
-    b2.config(state=DISABLED)
-    b3.config(state=DISABLED)
+    #players are  ['X', 'O']
+def choose_symobl_x():
+    TTTSettings.current_player_idx = 0
+    # X starts so True
+    TTTSettings.clickedX = True
+    TTTSettings.play_again = True
+    TTTSettings.intro_frame.quit()
+    print("you chose selectionX :", TTTSettings.players[TTTSettings.current_player_idx])
+def choose_symbol_0():
+    TTTSettings.current_player_idx = 1
+    TTTSettings.clickedX = False
+    TTTSettings.play_again = True
+    TTTSettings.intro_frame.quit()
+    print("you chose selectionO:", TTTSettings.players[TTTSettings.current_player_idx])
 
-    b4.config(state=DISABLED)
-    b5.config(state=DISABLED)
-    b6.config(state=DISABLED)
+def exit_game():
+    if TTTSettings.play_again == False:
+        messagebox.showinfo('tic tak toe', 'Thank you for playing')
+    TTTSettings.intro_frame.quit()
 
-    b7.config(state=DISABLED)
-    b8.config(state=DISABLED)
-    b9.config(state=DISABLED)
+def menu_item_selected(*args):
+    """ handle menu selected event """
+    TTTSettings.selected_mode.get()
+    print ("seleacted mode is ",TTTSettings.selected_mode.get())
 
+def make_intro_window():
 
+    TTTSettings.intro_frame.iconbitmap(r'C:\Program Files\Icon.ico')
+    TTTSettings.intro_frame.geometry('300x250')
+    Label(TTTSettings.intro_frame, text='Play tic tac toe .').pack(padx=10, pady=10)
+    Label(TTTSettings.intro_frame, text='\n\n\n\n\nChoose your symbol:').pack(padx=10, pady=10)
+    x_b= Button(TTTSettings.intro_frame, text='Choose X', command=choose_symobl_x)
+    x_b.pack(side='right', padx=10, pady=10)
+    x_b.place(x=80, y =160)
+    o_b =Button(TTTSettings.intro_frame, text='Choose O', command=choose_symbol_0)
+    o_b.pack(side='right', padx=10, pady=10)
+    o_b.place(x=160, y =160)
+    quit_b = Button(TTTSettings.intro_frame, text="QUIT GAME", command=exit_game)
+    quit_b.pack(side='right', padx=10, pady=10)
+    quit_b.place(x=110, y=40)
 
-#check to see if someone won can be refined
-def checkifwon():
-    global winner
-    winner = False
+    # create the Menubutton
 
-    if b1['text'] == 'X' and b2['text'] == 'X' and b3['text'] == 'X':
-        b1.config(bg='red')
-        b2.config(bg='red')
-        b3.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b4['text'] == 'X' and b5['text'] == 'X' and b6['text'] == 'X':
-        b4.config(bg='red')
-        b5.config(bg='red')
-        b6.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b7['text'] == 'X' and b8['text'] == 'X' and b9['text'] == 'X':
-        b7.config(bg='red')
-        b8.config(bg='red')
-        b9.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b1['text'] == 'X' and b4['text'] == 'X' and b7['text'] == 'X':
-        b1.config(bg='red')
-        b4.config(bg='red')
-        b7.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b2['text'] == 'X' and b5['text'] == 'X' and b8['text'] == 'X':
-        b2.config(bg='red')
-        b5.config(bg='red')
-        b8.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b3['text'] == 'X' and b6['text'] == 'X' and b9['text'] == 'X':
-        b3.config(bg='red')
-        b6.config(bg='red')
-        b9.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b1['text'] == 'X' and b5['text'] == 'X' and b9['text'] == 'X':
-        b1.config(bg='red')
-        b5.config(bg='red')
-        b9.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b3['text'] == 'X' and b5['text'] == 'X' and b7['text'] == 'X':
-        b3.config(bg='red')
-        b5.config(bg='red')
-        b7.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-# check for o win
-    elif b1['text'] == 'O' and b2['text'] == 'O' and b3['text'] == 'O':
-        b1.config(bg='red')
-        b2.config(bg='red')
-        b3.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b4['text'] == 'O' and b5['text'] == 'O' and b6['text'] == 'O':
-        b4.config(bg='red')
-        b5.config(bg='red')
-        b6.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b7['text'] == 'O' and b8['text'] == 'O' and b9['text'] == 'O':
-        b7.config(bg='red')
-        b8.config(bg='red')
-        b9.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b1['text'] == 'O' and b4['text'] == 'O' and b7['text'] == 'O':
-        b1.config(bg='red')
-        b4.config(bg='red')
-        b7.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b2['text'] == 'O' and b5['text'] == 'O' and b8['text'] == 'O':
-        b2.config(bg='red')
-        b5.config(bg='red')
-        b8.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b3['text'] == 'O' and b6['text'] == 'O' and b9['text'] == 'O':
-        b3.config(bg='red')
-        b6.config(bg='red')
-        b9.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b1['text'] == 'O' and b5['text'] == 'O' and b9['text'] == 'O':
-        b1.config(bg='red')
-        b5.config(bg='red')
-        b9.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-    elif b3['text'] == 'O' and b5['text'] == 'O' and b7['text'] == 'O':
-        b3.config(bg='red')
-        b5.config(bg='red')
-        b7.config(bg='red')
-        winner = True
-        messagebox.showinfo('tic tak toe', 'we have a winner')
-        disable_buttons()
-#button clicked function
-def b_click(b):
-    global clicked, count
+    menu_button = Menubutton(TTTSettings.intro_frame, text='Select a mode',relief=RAISED)
+    # create a new menu instance
+    menu =  Menu(menu_button, tearoff=1)
+    for mode in TTTSettings.play_mode:
+        menu.add_radiobutton(
+            label=mode,
+            value=mode,
+            variable=TTTSettings.selected_mode)
 
-    if b['text'] == ' ' and clicked == True:
-        b['text'] = 'X'
-        clicked = False
-        count += 1
-        checkifwon()
-    elif b['text'] == ' ' and clicked == False:
-        b['text'] = 'O'
-        clicked = True
-        count += 1
-        checkifwon()
-    else:
-        messagebox.showerror('Tic Tak Toe', 'this box has been clicked')
-
-#build the buttons
-b1 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b1) )
-b2 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b2) )
-b3 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b3) )
-
-b4 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b4) )
-b5 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b5) )
-b6 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b6) )
-
-b7 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b7) )
-b8 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b8) )
-b9 = Button(root,text=' ', font=('Helvetica', 20), height = 3, width = 6, bg = 'SystemButtonFace', command = lambda: b_click(b9) )
-
-#Grid our buttons to the string
-b1.grid(row=0, column=0)
-b2.grid(row=0, column=1)
-b3.grid(row=0, column=2)
-
-b4.grid(row=1, column=0)
-b5.grid(row=1, column=1)
-b6.grid(row=1, column=2)
-
-b7.grid(row=2, column=0)
-b8.grid(row=2, column=1)
-b9.grid(row=2, column=2)
+    # associate menu with the Menubutton
+    menu_button["menu"] = menu
+    menu_button.place(x=110,y=80)
+    TTTSettings.intro_frame.mainloop()
 
 
 
-root.mainloop()
+def playGame():
+    fist_init()
+    make_intro_window()
+    while TTTSettings.play_again == True :
+        if (TTTSettings.selected_mode.get() == 'manual'):
+            init_TicTacToe()
+            print("playing in manual mode")
+            tictacToeSequential.make_buttons()
+            tictacToeSequential.makePlayGrid()
+        elif (TTTSettings.selected_mode.get() == 'against AI'):
+            init_TicTacToe()
+            print("playing against computer")
+            tictacToeSequential.make_buttonsAgainst()
+            tictacToeSequential.makePlayGridAgainstComputer()
+        else:
+            TTTSettings.play_again = False
+            TTTSettings.intro_frame.quit()
+            messagebox.showinfo('tic tac toe ERROR! ', ' ERROR!! MODE of PLAY was not SELECTED')
+
+#main code entry this is where you start
+playGame()
+
